@@ -1,0 +1,58 @@
+<?php
+
+/*
+ * 	Login Redirect
+ * 	by Surfaraz Thakur (surft@skiversstudio.co.uk)
+ */
+
+define('SKIVERS_LOGIN_REDIRECT_ADMIN', 'admin/config/skiversloginredirect');
+
+//	hook_menu
+function skivers_login_redirect_menu()
+{
+
+    $items[SKIVERS_LOGIN_REDIRECT_ADMIN] = array(
+        'title' => 'SKIVERS Login Redirect',
+        'description' => '',
+        'page callback' => 'drupal_get_form',
+        'page arguments' => array('skivers_login_redirect_admin'),
+        'access arguments' => array('administer skivers_login_redirect_admin module'),
+        'type' => MENU_NORMAL_ITEM,
+    );
+
+    return $items;
+}
+
+//	Admin display
+function skivers_login_redirect_admin()
+{
+
+    $form = array();
+
+    $form['skivers_login_redirect_title'] = array(
+        '#markup' => '<h1>SKIVERS Login Redirect</h1><hr>'
+    );
+    $form['skivers_login_redirect_url'] = array(
+        '#type' => 'textfield',
+        '#title' => t('Redirection URL'),
+        '#default_value' => variable_get('skivers_login_redirect_url', 'URL'),
+        '#size' => 60,
+        '#maxlength' => 125,
+        '#description' => t("The URL to redirect to once a user has logged in successfully"),
+        '#required' => TRUE,
+    );
+
+    return system_settings_form($form);
+}
+
+function skivers_login_redirect_user_login(&$edit, $account)
+{
+    if (!isset($_POST['form_id']) || $_POST['form_id'] != 'user_pass_reset')
+    {
+        $redirect = variable_get('skivers_login_redirect_url', NULL);
+        if (!empty($redirect))
+        {
+            $edit['redirect'] = variable_get('skivers_login_redirect_url', NULL);
+        }
+    }
+}
