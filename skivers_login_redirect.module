@@ -2,7 +2,7 @@
 
 /*
  * 	Login Redirect
- * 	by Surfaraz Thakur (surft@skiversstudio.co.uk)
+ * 	by Surfaraz Thakur (surft@skivers.co.uk)
  */
 
 define('SKIVERS_LOGIN_REDIRECT_ADMIN', 'admin/config/skiversloginredirect');
